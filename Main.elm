@@ -12,12 +12,17 @@ import Time exposing (second, Time)
 
 main : Signal Html.Html
 main =
-  Signal.map view model
+  app.html
 
 
-model : Signal Model.Model
-model =
-  Signal.foldp update initialModel status.signal
+app =
+  StartApp.start
+    {
+      init = (initialModel, Effects.none)
+      , update = update
+      , view = view
+      , inputs = [ status.signal ]
+    }
 
 
 clock : Signal Time
@@ -33,3 +38,7 @@ periodicUpdate =
 port runner : Signal (Task Http.Error ())
 port runner =
   periodicUpdate
+
+port tasks : Signal (Task Effects.Never ())
+port tasks =
+  app.tasks

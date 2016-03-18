@@ -8,10 +8,13 @@ type Action = NowOkay | NowWarning | NowError
 
 
 update action model =
-  case action of
-    NowOkay ->
-      Okay
-    NowWarning ->
-      Warning
-    NowError ->
-      Error
+  let newModel =
+    case action of
+      NowOkay ->
+        Okay
+      NowWarning ->
+        Warning
+      NowError ->
+        Error
+  in
+    (newModel, Effects.none)

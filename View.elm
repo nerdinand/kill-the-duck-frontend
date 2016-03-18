@@ -7,7 +7,7 @@ import Update exposing (..)
 import Model exposing (..)
 
 
-view model =
+view address model =
   div (statusStyle model) [ text (toString model) ]
 
 
