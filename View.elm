@@ -28,3 +28,5 @@ statusColor status =
       "yellow"
     Error ->
       "red"
+    Inactive ->
+      "gray"

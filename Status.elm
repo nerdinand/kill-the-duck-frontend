@@ -7,7 +7,7 @@ import Update
 
 fetch : Task Http.Error ()
 fetch =
-  Http.getString "status.json" `andThen` handleStatusResult
+  Http.getString "http://3df0ed48.ngrok.com/nodeping" `andThen` handleStatusResult
 
 
 handleStatusResult : String -> Task x ()
@@ -17,13 +17,13 @@ handleStatusResult result =
 
 status : Signal.Mailbox Update.Action
 status =
-  Signal.mailbox Update.NowWarning
+  Signal.mailbox Update.NowInactive
 
 
 toAction : String -> Update.Action
 toAction actionString =
   case actionString of
-    "okay" ->
+    "ok" ->
       Update.NowOkay
     "warning" ->
       Update.NowWarning

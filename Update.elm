@@ -4,7 +4,7 @@ import Model exposing (..)
 import Effects
 
 
-type Action = NowOkay | NowWarning | NowError
+type Action = NowOkay | NowWarning | NowError | NowInactive
 
 
 update action model =
@@ -16,5 +16,7 @@ update action model =
         Warning
       NowError ->
         Error
+      NowInactive ->
+        Inactive
   in
     (newModel, Effects.none)
