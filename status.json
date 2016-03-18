@@ -1,0 +1,8 @@
+{
+  "key" : "nodeping",
+  "type" : "status",
+  "data" : {
+    "status" : "okay",
+    "timestamp" : "2016-03-17T12:30:43Z"
+  }
+}
