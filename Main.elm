@@ -2,18 +2,35 @@ import Http
 import Model exposing (initialModel)
 import View exposing (view)
 import Update exposing (update)
-import Status exposing (fetch)
+import Status exposing (status, handleStatusResult)
 import Task exposing (Task)
-import StartApp.Simple
-
+import StartApp
+import Effects
+import Time exposing (second, Time)
 
 main =
-  StartApp.Simple.start
-    { model = initialModel
-    , update = update
-    , view = view
+  app.html
+
+app =
+  StartApp.start
+    {
+      init = (initialModel, Effects.none)
+      , update = update
+      , view = view
+      , inputs = []
     }
 
-port fetchStatus : Task Http.Error ()
-port fetchStatus =
-  fetch
+
+clock : Signal Time
+clock =
+  Time.every second
+
+
+periodicUpdate : Signal (Task Http.Error ())
+periodicUpdate =
+  Signal.map (\_ -> Status.fetch) clock
+
+
+port runner : Signal (Task Http.Error ())
+port runner =
+  periodicUpdate

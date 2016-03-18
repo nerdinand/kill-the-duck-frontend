@@ -1,15 +1,20 @@
 module Update where
 
 import Model exposing (..)
+import Effects
+
 
 type Action = NowOkay | NowWarning | NowError
 
-update : Action -> Model -> Model
+
 update action model =
-  case action of
-    NowOkay ->
-      Okay
-    NowWarning ->
-      Warning
-    NowError ->
-      Error
+  let model =
+    case action of
+      NowOkay ->
+        Okay
+      NowWarning ->
+        Warning
+      NowError ->
+        Error
+  in
+    (model, Effects.none)
