@@ -1,4 +1,5 @@
 import Http
+import Html
 import Model exposing (initialModel)
 import View exposing (view)
 import Update exposing (update)
@@ -8,17 +9,15 @@ import StartApp
 import Effects
 import Time exposing (second, Time)
 
-main =
-  app.html
 
-app =
-  StartApp.start
-    {
-      init = (initialModel, Effects.none)
-      , update = update
-      , view = view
-      , inputs = []
-    }
+main : Signal Html.Html
+main =
+  Signal.map view model
+
+
+model : Signal Model.Model
+model =
+  Signal.foldp update initialModel status.signal
 
 
 clock : Signal Time

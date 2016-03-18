@@ -3,7 +3,7 @@ module Status where
 import Http
 import Task exposing (andThen, Task)
 import Json.Decode exposing (Decoder, (:=), object1, string)
-
+import Update
 
 fetch : Task Http.Error ()
 fetch =
@@ -12,12 +12,23 @@ fetch =
 
 handleStatusResult : String -> Task x ()
 handleStatusResult result =
-  Signal.send status.address (decodeResult result)
+  Signal.send status.address (toAction (decodeResult result))
 
 
-status : Signal.Mailbox String
+status : Signal.Mailbox Update.Action
 status =
-  Signal.mailbox "Fetching..."
+  Signal.mailbox Update.NowWarning
+
+
+toAction : String -> Update.Action
+toAction actionString =
+  case actionString of
+    "okay" ->
+      Update.NowOkay
+    "warning" ->
+      Update.NowWarning
+    _ ->
+      Update.NowError
 
 
 decodeResult : String -> String
